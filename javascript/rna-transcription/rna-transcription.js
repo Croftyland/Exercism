@@ -1,21 +1,14 @@
-"use strict";
-
-var DnaTranscriber = function() {
-    this.trans = {
-        G: 'C',
-        C: 'G',
-        T: 'A',
-        A: 'U',
-    };
+export const toRna = (dna) => {
+    //const rna = dna.replace(/./g, nucleotide => DNA_TO_RNA[nucleotide]);
+    const rna = dna
+        .replace('A', 'U')
+        .replace('C', 'G')
+        .replace('G', 'C')
+        .replace('T', 'A');
+    if (rna.length !== dna.length) {
+        // invalid characters in the strand
+        throw new Error('Invalid input DNA.');
+    } else {
+        return rna;
+    }
 };
-
-DnaTranscriber.prototype.toRna = function (strand) {
-    return strand.split('').map( x => {
-        if (!this.trans[x]) {
-            throw new Error("Invalid input");
-        }
-        return this.trans[x];
-    }).join('');
-};
-
-module.exports = DnaTranscriber;
