@@ -24,3 +24,43 @@ class Allergies {
 }
 
 export default Allergies;
+
+
+// Reference data:
+const allergyScores = new Map([
+    [1,   'eggs'],
+    [2,   'peanuts'],
+    [4,   'shellfish'],
+    [8,   'strawberries'],
+    [16,  'tomatoes'],
+    [32,  'chocolate'],
+    [64,  'pollen'],
+    [128, 'cats']
+])
+
+// The actual check for possible allergies:
+function allergies(score) {
+    // Just test if each score ANDs to a positive:
+    return [...allergyScores.keys()].filter(v => v & score)
+    // Map scores to allergens:
+        .map(v => allergyScores.get(v))
+}
+
+// Interface:
+class Allergies {
+    constructor(score) {
+        // If a person has a score, they have allergies.
+        // Build the list in the constructor:
+        this.allergies = allergies(score)
+    }
+
+    list() {
+        return this.allergies
+    }
+
+    allergicTo(allergen) {
+        return this.allergies.includes(allergen)
+    }
+}
+
+export default Allergies
